@@ -151,6 +151,10 @@ namespace _2023_GC_A2_Partiel_POO.Level_2
         /// <exception cref="ArgumentNullException">Si equipement est null</exception>
         public void Equip(Equipment newEquipment)
         {
+            if (newEquipment == null)
+            {
+                throw new ArgumentNullException();
+            }
             CurrentEquipment = newEquipment;
             MaxHealth += newEquipment.BonusHealth;
             Attack += newEquipment.BonusAttack;
@@ -169,5 +173,16 @@ namespace _2023_GC_A2_Partiel_POO.Level_2
             CurrentEquipment = null;
         }
 
+        public void Heal(int value)
+        {
+            if (CurrentHealth + value > MaxHealth)
+            {
+                CurrentHealth = MaxHealth;
+            }
+            else
+            {
+                CurrentHealth += value;
+            }
+        }
     }
 }
