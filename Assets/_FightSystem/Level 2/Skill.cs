@@ -20,7 +20,7 @@ namespace _2023_GC_A2_Partiel_POO.Level_2
         /// <summary>
         /// La puissance du coup, à prendre en compte lors de la résolution des dégâts
         /// </summary>
-        public int Power { get; private set; }
+        public int Power { get; set; }
         /// <summary>
         /// Le statut infligé à la cible à la suite de l'attaque
         /// </summary>

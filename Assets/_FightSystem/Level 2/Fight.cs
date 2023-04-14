@@ -24,10 +24,10 @@ namespace _2023_GC_A2_Partiel_POO.Level_2
         {
             get
             {
-                if (Character1.IsAlive || Character2.IsAlive)
-                    return false;
-                else
+                if (!Character1.IsAlive || !Character2.IsAlive)
                     return true;
+                else
+                    return false;
             }
         }
 
@@ -39,17 +39,23 @@ namespace _2023_GC_A2_Partiel_POO.Level_2
         /// <exception cref="ArgumentNullException">si une des deux attaques est null</exception>
         public void ExecuteTurn(Skill skillFromCharacter1, Skill skillFromCharacter2)
         {
-            if (Character1.Speed < Character2.Speed)
+            //skillFromCharacter1.Power += Character1.Attack;
+            //skillFromCharacter2.Power += Character2.Attack;
+
+            switch(Character1.Speed > Character2.Speed)
             {
-                Character2.ReceiveAttack(skillFromCharacter1);
-                if (Character2.IsAlive)
-                    Character1.ReceiveAttack(skillFromCharacter2);
-            }
-            else if (Character1.Speed > Character2.Speed)
-            {
-                Character1.ReceiveAttack(skillFromCharacter2);
-                if (Character1.IsAlive)
+                case true:
+                    skillFromCharacter1.Power = Character1.Attack;
                     Character2.ReceiveAttack(skillFromCharacter1);
+                    if (Character2.IsAlive)
+                        Character1.ReceiveAttack(skillFromCharacter2);
+                    break;
+                case false:
+                    skillFromCharacter2.Power = Character2.Attack;
+                    Character1.ReceiveAttack(skillFromCharacter2);
+                    if (Character1.IsAlive)
+                        Character2.ReceiveAttack(skillFromCharacter1);
+                    break;
             }
         }
 

@@ -122,7 +122,7 @@ namespace _2023_GC_A2_Partiel_POO.Level_2
         {
             get
             {
-                if (CurrentHealth == 0)
+                if (CurrentHealth <= 0)
                     return false;
                 else
                     return true;
@@ -141,7 +141,10 @@ namespace _2023_GC_A2_Partiel_POO.Level_2
         {
             CurrentHealth -= (s.Power - Defense);
             if (CurrentHealth < 0)
+            {
                 CurrentHealth = 0;
+            }
+                
             CurrentStatus = StatusEffect.GetNewStatusEffect(s.Status);
         }
         /// <summary>
