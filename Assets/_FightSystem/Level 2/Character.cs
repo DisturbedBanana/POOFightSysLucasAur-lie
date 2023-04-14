@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 
 namespace _2023_GC_A2_Partiel_POO.Level_2
 {
@@ -7,6 +8,7 @@ namespace _2023_GC_A2_Partiel_POO.Level_2
     /// </summary>
     public class Character
     {
+        int _maxHealth;
         /// <summary>
         /// Stat de base, HP
         /// </summary>
@@ -31,7 +33,7 @@ namespace _2023_GC_A2_Partiel_POO.Level_2
         public Character(int baseHealth, int baseAttack, int baseDefense, int baseSpeed, TYPE baseType)
         {
             _baseHealth = baseHealth;
-            CurrentHealth = baseHealth;
+            _maxHealth = baseHealth;
             _baseAttack = baseAttack;
             _baseDefense = baseDefense;
             _baseSpeed = baseSpeed;
@@ -40,35 +42,72 @@ namespace _2023_GC_A2_Partiel_POO.Level_2
         /// <summary>
         /// HP actuel du personnage
         /// </summary>
-        public int CurrentHealth { get; private set; }
+        public int CurrentHealth { 
+            get
+            {
+                return _baseHealth;
+            }
+            private set
+            {
+                _baseHealth = value;
+            }
+        }
         public TYPE BaseType { get => _baseType;}
         /// <summary>
         /// HPMax, prendre en compte base et equipement potentiel
         /// </summary>
         public int MaxHealth
         {
-            get => _baseHealth;
+            get
+            {
+                return _maxHealth;
+            }
+            private set
+            {
+                _maxHealth = value;
+            }
         }
         /// <summary>
         /// ATK, prendre en compte base et equipement potentiel
         /// </summary>
         public int Attack
         {
-            get => _baseAttack;
+            get
+            {
+                return _baseAttack;
+            }
+            private set
+            {
+                _baseAttack = value;
+            }
         }
         /// <summary>
         /// DEF, prendre en compte base et equipement potentiel
         /// </summary>
         public int Defense
         {
-            get => _baseDefense;
+            get
+            {
+                return _baseDefense;
+            }
+            private set
+            {
+                _baseDefense = value;
+            }
         }
         /// <summary>
         /// SPE, prendre en compte base et equipement potentiel
         /// </summary>
         public int Speed
         {
-            get => _baseSpeed;
+            get
+            {
+                return _baseSpeed;
+            }
+            private set
+            {
+                _baseSpeed = value;
+            }
         }
         /// <summary>
         /// Equipement unique du personnage
@@ -100,14 +139,22 @@ namespace _2023_GC_A2_Partiel_POO.Level_2
         /// <exception cref="ArgumentNullException">Si equipement est null</exception>
         public void Equip(Equipment newEquipment)
         {
-            throw new NotImplementedException();
+            CurrentEquipment = newEquipment;
+            MaxHealth += newEquipment.BonusHealth;
+            Attack += newEquipment.BonusAttack;
+            Defense += newEquipment.BonusDefense;
+            Speed += newEquipment.BonusSpeed;
         }
         /// <summary>
         /// Desequipe l'objet en cours au personnage
         /// </summary>
         public void Unequip()
         {
-            throw new NotImplementedException();
+            MaxHealth -= CurrentEquipment.BonusHealth;
+            Attack -= CurrentEquipment.BonusAttack;
+            Defense -= CurrentEquipment.BonusDefense;
+            Speed -= CurrentEquipment.BonusSpeed;
+            CurrentEquipment = null;
         }
 
     }
