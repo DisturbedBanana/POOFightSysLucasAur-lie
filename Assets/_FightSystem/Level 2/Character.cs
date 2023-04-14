@@ -118,7 +118,16 @@ namespace _2023_GC_A2_Partiel_POO.Level_2
         /// </summary>
         public StatusEffect CurrentStatus { get; private set; }
 
-        public bool IsAlive => throw new NotImplementedException();
+        public bool IsAlive
+        {
+            get
+            {
+                if (CurrentHealth == 0)
+                    return false;
+                else
+                    return true;
+            }
+        }
 
 
         /// <summary>
@@ -130,7 +139,10 @@ namespace _2023_GC_A2_Partiel_POO.Level_2
         /// <exception cref="NotImplementedException"></exception>
         public void ReceiveAttack(Skill s)
         {
-            throw new NotImplementedException();
+            CurrentHealth -= (s.Power - Defense);
+            if (CurrentHealth < 0)
+                CurrentHealth = 0;
+            CurrentStatus = StatusEffect.GetNewStatusEffect(s.Status);
         }
         /// <summary>
         /// Equipe un objet au personnage
