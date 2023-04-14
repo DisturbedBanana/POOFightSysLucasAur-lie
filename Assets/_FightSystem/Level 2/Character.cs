@@ -31,6 +31,7 @@ namespace _2023_GC_A2_Partiel_POO.Level_2
         public Character(int baseHealth, int baseAttack, int baseDefense, int baseSpeed, TYPE baseType)
         {
             _baseHealth = baseHealth;
+            CurrentHealth = baseHealth;
             _baseAttack = baseAttack;
             _baseDefense = baseDefense;
             _baseSpeed = baseSpeed;
@@ -46,40 +47,28 @@ namespace _2023_GC_A2_Partiel_POO.Level_2
         /// </summary>
         public int MaxHealth
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get => _baseHealth;
         }
         /// <summary>
         /// ATK, prendre en compte base et equipement potentiel
         /// </summary>
         public int Attack
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get => _baseAttack;
         }
         /// <summary>
         /// DEF, prendre en compte base et equipement potentiel
         /// </summary>
         public int Defense
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get => _baseDefense;
         }
         /// <summary>
         /// SPE, prendre en compte base et equipement potentiel
         /// </summary>
         public int Speed
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get => _baseSpeed;
         }
         /// <summary>
         /// Equipement unique du personnage
