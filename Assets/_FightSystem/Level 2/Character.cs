@@ -139,7 +139,55 @@ namespace _2023_GC_A2_Partiel_POO.Level_2
         /// <exception cref="NotImplementedException"></exception>
         public void ReceiveAttack(Skill s)
         {
-            CurrentHealth -= (s.Power - Defense);
+            switch (s.Type)
+            {
+                case TYPE.NORMAL:
+                    CurrentHealth -= (s.Power - Defense);
+                    break;
+                case TYPE.FIRE:
+                    switch (BaseType)
+                    {
+                        case TYPE.FIRE:
+                            CurrentHealth -= (s.Power - Defense);
+                            break;
+                        case TYPE.WATER:
+                            CurrentHealth -= (s.Power / 2) - Defense;
+                            break;
+                        case TYPE.GRASS:
+                            CurrentHealth -= (s.Power * 2) - Defense;
+                            break;
+                    }
+                    break;
+                case TYPE.WATER:
+                    switch (BaseType)
+                    {
+                        case TYPE.FIRE:
+                            CurrentHealth -= (s.Power * 2) - Defense;
+                            break;
+                        case TYPE.WATER:
+                            CurrentHealth -= (s.Power - Defense);
+                            break;
+                        case TYPE.GRASS:
+                            CurrentHealth -= (s.Power / 2) - Defense;
+                            break;
+                    }
+                    break;
+                case TYPE.GRASS:
+                    switch (BaseType)
+                    {
+                        case TYPE.FIRE:
+                            CurrentHealth -= (s.Power / 2) - Defense;
+                            break;
+                        case TYPE.WATER:
+                            CurrentHealth -= (s.Power * 2) - Defense;
+                            break;
+                        case TYPE.GRASS:
+                            CurrentHealth -= (s.Power - Defense);
+                            break;
+                    }
+                    break;
+            }
+            
             if (CurrentHealth < 0)
             {
                 CurrentHealth = 0;
@@ -185,6 +233,15 @@ namespace _2023_GC_A2_Partiel_POO.Level_2
             else
             {
                 CurrentHealth += value;
+            }
+        }
+
+        public void ReduceMaxHealth(int value)
+        {
+            MaxHealth -= value;
+            if (CurrentHealth > MaxHealth)
+            {
+                CurrentHealth = MaxHealth;
             }
         }
     }

@@ -5,6 +5,10 @@ namespace _2023_GC_A2_Partiel_POO.Level_2
 {
     public class Fight
     {
+        int _whoAttackedFirst = 0; // 0 = depends de la vitesse(pas de priorité) , 1 = character1, 2 = character2
+
+        public int WhoAttackedFirst { get => _whoAttackedFirst; private set { _whoAttackedFirst = value; } }
+
         public Fight(Character character1, Character character2)
         {
             if (character1 == null || character2 == null)
@@ -39,25 +43,46 @@ namespace _2023_GC_A2_Partiel_POO.Level_2
         /// <exception cref="ArgumentNullException">si une des deux attaques est null</exception>
         public void ExecuteTurn(Skill skillFromCharacter1, Skill skillFromCharacter2)
         {
-            //skillFromCharacter1.Power += Character1.Attack;
-            //skillFromCharacter2.Power += Character2.Attack;
-
-            switch(Character1.Speed > Character2.Speed)
+            if (skillFromCharacter1 == null || skillFromCharacter2 == null)
             {
-                case true:
-                    skillFromCharacter1.Power = Character1.Attack;
-                    Character2.ReceiveAttack(skillFromCharacter1);
-                    if (Character2.IsAlive)
-                        Character1.ReceiveAttack(skillFromCharacter2);
-                    break;
-                case false:
-                    skillFromCharacter2.Power = Character2.Attack;
-                    Character1.ReceiveAttack(skillFromCharacter2);
-                    if (Character1.IsAlive)
-                        Character2.ReceiveAttack(skillFromCharacter1);
-                    break;
+                throw new ArgumentNullException();
             }
-        }
+            
+            skillFromCharacter1.Power = Character1.Attack;
+            skillFromCharacter2.Power = Character2.Attack;
 
+            
+            if (Character1.CurrentEquipment != null && Character1.CurrentEquipment.IsPriority)
+            {
+                WhoAttackedFirst = 1;
+                Character2.ReceiveAttack(skillFromCharacter1);
+                if (Character2.IsAlive)
+                    Character1.ReceiveAttack(skillFromCharacter2);
+            }
+            else if (Character2.CurrentEquipment != null && Character2.CurrentEquipment.IsPriority)
+            {
+                WhoAttackedFirst = 2;
+                Character1.ReceiveAttack(skillFromCharacter2);
+                if (Character1.IsAlive)
+                    Character2.ReceiveAttack(skillFromCharacter1);
+            }
+            else
+            {
+                WhoAttackedFirst = 0;
+                switch (Character1.Speed > Character2.Speed)
+                {
+                    case true:
+                        Character2.ReceiveAttack(skillFromCharacter1);
+                        if (Character2.IsAlive)
+                            Character1.ReceiveAttack(skillFromCharacter2);
+                        break;
+                    case false:
+                        Character1.ReceiveAttack(skillFromCharacter2);
+                        if (Character1.IsAlive)
+                            Character2.ReceiveAttack(skillFromCharacter1);
+                        break;
+                }
+            }   
+        }
     }
 }
